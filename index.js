@@ -29,8 +29,9 @@ async function run() {
 
     const sportsToysCollection = client.db("sportsToy").collection("toys");
 
+    // get all toys
     app.get('/alltoys', async (req, res) => {
-        const cursor = sportsToysCollection.find({});
+        const cursor = sportsToysCollection.find();
         const result = await cursor.toArray();
         res.send(result);
     });
