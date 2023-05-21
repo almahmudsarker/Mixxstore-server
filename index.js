@@ -41,6 +41,7 @@ async function run() {
         console.log(email);
         const result = await sportsToysCollection
           .find({ sellerEmail: email })
+          .sort({ price: 1 })
           .toArray();
         res.send(result);
     });
