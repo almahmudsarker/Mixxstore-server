@@ -35,7 +35,17 @@ async function run() {
         res.send(result);
     });
 
-    // post a new toy
+    // get a toy by user email
+    app.get("/mytoys/:email", async (req, res) => {
+        const email = req.params.email;
+        console.log(email);
+        const result = await sportsToysCollection
+          .find({ sellerEmail: email })
+          .toArray();
+        res.send(result);
+    });
+
+    // post or add a new toy
     app.post('/addToy', async (req, res) => {
         const newToy = req.body;15
         const result = await sportsToysCollection.insertOne(newToy);
