@@ -29,6 +29,28 @@ async function run() {
 
     const sportsToysCollection = client.db("sportsToy").collection("toys");
 
+    //Creating index on toy name field
+    const indexKeys = { name: 1, subCategory: 1 };
+    const indexOptions = { name: "nameSubCategory" };
+    const result = await sportsToysCollection.createIndex(
+      indexKeys,
+      indexOptions
+    );  
+
+    app.get('/toysearch/:text', async (req, res) => {
+        const searchText = req.params.text;
+        const result = await sportsToysCollection
+          .find({
+            $or: [
+              { name: { $regex: searchText, $options: "i" } },
+              { subCategory: { $regex: searchText, $options: "i" } },
+            ],
+          })
+          .toArray();
+        res.send(result);
+    });
+
+
     // get all toys
     app.get('/alltoys', async (req, res) => {
         const result = await sportsToysCollection.find({}).toArray();
