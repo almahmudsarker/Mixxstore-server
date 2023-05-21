@@ -31,14 +31,13 @@ async function run() {
 
     // get all toys
     app.get('/alltoys', async (req, res) => {
-        const cursor = sportsToysCollection.find();
-        const result = await cursor.toArray();
+        const result = await sportsToysCollection.find({}).toArray();
         res.send(result);
     });
 
     // post a new toy
     app.post('/addToy', async (req, res) => {
-        const newToy = req.body;
+        const newToy = req.body;15
         const result = await sportsToysCollection.insertOne(newToy);
         console.log('Got new Toy', result);
         res.send(result);
